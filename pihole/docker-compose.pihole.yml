@@ -9,8 +9,8 @@ services:
       - "80:80/tcp"    # Web interface
       - "443:443/tcp"  # Web interface (HTTPS)
     environment:
-      - TZ=America/New_York  # Replace with your timezone
-      - FTLCONF_webserver_api_password=your_secure_password  # Set your admin password
+      - TZ=America/New_York  # Your timezone
+      - WEBPASSWORD=your_secure_password  # Set your admin password here
     volumes:
       - ./etc-pihole:/etc/pihole  # Persistent Pi-hole config
       - ./etc-dnsmasq.d:/etc/dnsmasq.d  # Persistent DNS config
