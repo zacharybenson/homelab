@@ -10,7 +10,7 @@ services:
       - "443:443/tcp"  # Web interface (HTTPS)
     environment:
       - TZ=America/New_York  # Your timezone
-      - WEBPASSWORD=your_secure_password  # Set your admin password here
+      - WEBPASSWORD="test1234" Set your admin password here
     volumes:
       - ./etc-pihole:/etc/pihole  # Persistent Pi-hole config
       - ./etc-dnsmasq.d:/etc/dnsmasq.d  # Persistent DNS config
