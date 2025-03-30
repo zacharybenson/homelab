@@ -36,7 +36,8 @@ services:
 
   squid:
     container_name: squid_proxy
-    image: ubuntu/squid:latest
+    image: datadog/squid
+
     ports:
       - "3128:3128"  # Squid proxy port
     volumes:
