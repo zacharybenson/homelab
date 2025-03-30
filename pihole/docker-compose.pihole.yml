@@ -1,53 +1,42 @@
+version: "3.8"
+
 services:
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:latest
-    ports:
-      # DNS Ports
-      - "53:53/tcp"
-      - "53:53/udp"
-      # Default HTTP Port
-      - "80:80/tcp"
-      # Default HTTPS Port (FTL generates self-signed cert)
-      - "443:443/tcp"
-      # Uncomment if using Pi-hole as DHCP server
-      #- "67:67/udp"
-      # Uncomment if using Pi-hole as NTP server
-      #- "123:123/udp"
-    environment:
-      # Set your timezone (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-      TZ: 'Europe/London'
-      # Web interface password
-      FTLCONF_webserver_api_password: 'correct horse battery staple'
-      # DNS listening mode for Docker bridge network
-      FTLCONF_dns_listeningMode: 'all'
-    volumes:
-      # Persist Pi-hole data
-      - './etc-pihole:/etc/pihole'
-      # Uncomment if you have custom dnsmasq configs (not needed for fresh v6 installs)
-      #- './etc-dnsmasq.d:/etc/dnsmasq.d'
-    cap_add:
-      - NET_ADMIN  # Required for DNS (and DHCP if enabled)
-      - SYS_TIME   # Required for NTP if enabled
-      - SYS_NICE   # Optional for better process priority
-    restart: unless-stopped
-    networks:
-      - proxy_network
+  # pihole:
+  #   container_name: pihole
+  #   image: pihole/pihole:latest
+  #   ports:
+  #     - "53:53/tcp"
+  #     - "53:53/udp"
+  #     - "80:80/tcp"
+  #     - "443:443/tcp"
+  #   environment:
+  #     TZ: 'Europe/London'
+  #     FTLCONF_webserver_api_password: 'correct horse battery staple'
+  #     FTLCONF_dns_listeningMode: 'all'
+  #   volumes:
+  #     - './etc-pihole:/etc/pihole'
+  #   cap_add:
+  #     - NET_ADMIN
+  #     - SYS_TIME
+  #     - SYS_NICE
+  #   restart: unless-stopped
+  #   networks:
+  #     - proxy_network
 
   squid:
     container_name: squid_proxy
     build:
       context: .
       dockerfile: Dockerfile.squid
-      args:
-        - BUILDPLATFORM=linux/arm/v6
-
     ports:
-      - "3128:3128"  # Squid proxy port
+      - "3128:3128"
     volumes:
       - squid_cache:/var/spool/squid
       - ./squid.conf:/etc/squid/squid.conf
       - ./blocked_patterns.txt:/etc/squid/blocked_patterns.txt
+      - ./entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    tty: true  # Helps capture output
     environment:
       - TZ=UTC
     restart: unless-stopped
