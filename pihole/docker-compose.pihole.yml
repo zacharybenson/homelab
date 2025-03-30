@@ -36,7 +36,9 @@ services:
 
   squid:
     container_name: squid_proxy
-    image: sameersbn/squid:3.5.27-20170918
+    build:
+      context: .
+      dockerfile: Dockerfile.squid
 
     ports:
       - "3128:3128"  # Squid proxy port
