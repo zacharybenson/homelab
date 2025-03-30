@@ -1,0 +1,2 @@
+# New Hulu editorial pattern
+^http[s]?://img[0-9]\.hulu\.com/user/v3/editorial/
