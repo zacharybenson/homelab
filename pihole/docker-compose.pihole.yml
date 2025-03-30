@@ -35,8 +35,9 @@ services:
       - ./squid.conf:/etc/squid/squid.conf
       - ./blocked_patterns.txt:/etc/squid/blocked_patterns.txt
       - ./entrypoint.sh:/entrypoint.sh
+      - ./squid-ca.pem:/etc/squid/squid-ca.pem
     entrypoint: ["/bin/sh", "/entrypoint.sh"]
-    tty: true  # Helps capture output
+    tty: true
     environment:
       - TZ=UTC
     restart: unless-stopped
