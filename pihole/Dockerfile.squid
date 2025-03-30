@@ -1,6 +1,6 @@
-FROM arm32v6/alpine
-RUN apk add --no-cache squid
+FROM arm32v6/debian:buster
+RUN apt-get update && apt-get install -y squid && rm -rf /var/lib/apt/lists/*
 COPY squid.conf /etc/squid/squid.conf
 COPY blocked_patterns.txt /etc/squid/blocked_patterns.txt
-RUN squid -z -f /etc/squid/squid.conf
-CMD ["squid", "-N", "-d", "1", "-f", "/etc/squid/squid.conf"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
