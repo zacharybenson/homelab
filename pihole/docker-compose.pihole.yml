@@ -30,8 +30,8 @@ services:
       dockerfile: Dockerfile.squid
     ports:
       - "3128:3128"
+      - "3129:3129"
     volumes:
-      - squid_cache:/var/spool/squid
       - ./squid.conf:/etc/squid/squid.conf
       - ./blocked_patterns.txt:/etc/squid/blocked_patterns.txt
       - ./entrypoint.sh:/entrypoint.sh
@@ -40,13 +40,11 @@ services:
     tty: true
     environment:
       - TZ=UTC
+    cap_add:
+      - NET_ADMIN
+    network_mode: "host"  # For transparent mode
     restart: unless-stopped
-    networks:
-      - proxy_network
 
 networks:
   proxy_network:
     driver: bridge
-
-volumes:
-  squid_cache:
