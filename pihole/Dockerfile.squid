@@ -4,4 +4,4 @@ COPY squid.conf /etc/squid/squid.conf
 COPY blocked_patterns.txt /etc/squid/blocked_patterns.txt
 COPY entrypoint.sh /entrypoint.sh
 COPY squid-ca.pem /etc/squid/squid-ca.pem
-RUN chmod +x /entrypoint.sh && chown squid:squid /etc/squid/squid-ca.pem
+RUN chmod +x /entrypoint.sh && chown squid:squid /etc/squid/squid-ca.pem && chmod 600 /etc/squid/squid-ca.pem
