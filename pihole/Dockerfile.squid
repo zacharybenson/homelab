@@ -1,8 +1,8 @@
 FROM arm32v6/alpine
-RUN apk add --no-cache squid bash
-# Create and set ownership of cache directory during build
+RUN apk add --no-cache squid bash openssl
 RUN mkdir -p /var/spool/squid && chown squid:squid /var/spool/squid
 COPY squid.conf /etc/squid/squid.conf
 COPY blocked_patterns.txt /etc/squid/blocked_patterns.txt
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY squid-ca.pem /etc/squid/squid-ca.pem
+RUN chmod +x /entrypoint.sh && chown squid:squid /etc/squid/squid-ca.pem
