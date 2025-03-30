@@ -1,4 +1,4 @@
-FROM arm32v6/debian:buster
+FROM arm32v6/alpine
 RUN apt-get update && apt-get install -y squid && rm -rf /var/lib/apt/lists/*
 COPY squid.conf /etc/squid/squid.conf
 COPY blocked_patterns.txt /etc/squid/blocked_patterns.txt
