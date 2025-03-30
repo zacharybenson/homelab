@@ -36,7 +36,7 @@ services:
 
   squid:
     container_name: squid_proxy
-    image: datadog/squid
+    image: sameersbn/squid:3.5.27-20170918
 
     ports:
       - "3128:3128"  # Squid proxy port
