@@ -39,6 +39,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.squid
+      args:
+        - BUILDPLATFORM=linux/arm/v6
 
     ports:
       - "3128:3128"  # Squid proxy port
