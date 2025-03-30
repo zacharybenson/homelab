@@ -17,7 +17,7 @@ services:
       # Uncomment if using Pi-hole as NTP server
       #- "123:123/udp"
     environment:
-      # Set your timezone (e.g., https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+      # Set your timezone (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
       TZ: 'Europe/London'
       # Web interface password
       FTLCONF_webserver_api_password: 'correct horse battery staple'
@@ -44,6 +44,7 @@ services:
     volumes:
       - squid_cache:/var/spool/squid
       - ./squid.conf:/etc/squid/squid.conf
+      - ./blocked_patterns.txt:/etc/squid/blocked_patterns.txt
     environment:
       - TZ=UTC
     restart: unless-stopped
