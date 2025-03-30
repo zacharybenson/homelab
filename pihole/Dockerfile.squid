@@ -1,5 +1,5 @@
 FROM arm32v6/alpine
-RUN apk add --no-cache squid bash openssl
+RUN apk add --no-cache squid bash openssl libssl3 libcrypto3
 COPY squid.conf /etc/squid/squid.conf
 COPY blocked_patterns.txt /etc/squid/blocked_patterns.txt
 COPY entrypoint.sh /entrypoint.sh
