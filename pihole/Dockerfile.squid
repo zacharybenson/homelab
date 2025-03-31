@@ -1,5 +1,7 @@
 FROM arm32v6/alpine
-RUN apk update && apk add --no-cache squid bash openssl libcrypto1.1 libssl1.1
+RUN echo "http://mirror.math.princeton.edu/pub/alpinelinux/v3.21/main" > /etc/apk/repositories && \
+    echo "http://mirror.math.princeton.edu/pub/alpinelinux/v3.21/community" >> /etc/apk/repositories && \
+    apk update && apk add --no-cache squid bash openssl libcrypto1.1 libssl1.1
 COPY squid.conf /etc/squid/squid.conf
 COPY blocked_patterns.txt /etc/squid/blocked_patterns.txt
 COPY entrypoint.sh /entrypoint.sh
