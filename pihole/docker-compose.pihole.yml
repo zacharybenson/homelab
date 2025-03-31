@@ -31,20 +31,20 @@ services:
     ports:
       - "3128:3128"
       - "3129:3129"
-      - "3130:3130"  # Forward-proxy port
+      - "3130:3130"
     volumes:
       - ./squid.conf:/etc/squid/squid.conf
       - ./blocked_patterns.txt:/etc/squid/blocked_patterns.txt
       - ./entrypoint.sh:/entrypoint.sh
       - ./squid-ca.pem:/etc/squid/squid-ca.pem
-    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    entrypoint: ["/bin/bash", "/entrypoint.sh"]
     tty: true
     environment:
       - TZ=UTC
     cap_add:
       - NET_ADMIN
     network_mode: "host"
-    restart: unless-stopped
+  restart: unless-stopped
 
 networks:
   proxy_network:
