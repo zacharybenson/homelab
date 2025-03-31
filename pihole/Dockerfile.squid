@@ -1,9 +1,7 @@
-FROM arm32v6/alpine
-RUN echo "http://mirror.math.princeton.edu/pub/alpinelinux/v3.21/main" > /etc/apk/repositories && \
-    echo "http://mirror.math.princeton.edu/pub/alpinelinux/v3.21/community" >> /etc/apk/repositories && \
-    apk update && apk add --no-cache squid bash openssl libcrypto1.1 libssl1.1
+FROM arm32v7/ubuntu:20.04
+RUN apt-get update && apt-get install -y squid openssl bash
 COPY squid.conf /etc/squid/squid.conf
 COPY blocked_patterns.txt /etc/squid/blocked_patterns.txt
 COPY entrypoint.sh /entrypoint.sh
 COPY squid-ca.pem /etc/squid/squid-ca.pem
-RUN chmod +x /entrypoint.sh && chown squid:squid /etc/squid/squid-ca.pem && chmod 600 /etc/squid/squid-ca.pem
+RUN chmod +x /entrypoint.sh && chown proxy:proxy /etc/squid/squid-ca.pem && chmod 600 /etc/squid/squid-ca.pem
